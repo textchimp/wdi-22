@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Barrio|Roboto+Condensed');
+
 body {
   height: 9999px;
+  font-family: 'Roboto Condensed';
 }
 
 .box {
@@ -19,14 +22,32 @@ body {
 
 .relative {
   position: relative; /* relative to default static position */
-  left: 200px;
-  top: 200px;
+  left: 400px;
+  top: -200px;
 }
 
 .absolute {
   position: absolute; /* relative to document or to nearest specifically-positioned ancestor (not including 'static') */
   top: 50px;
   left: 100px;
+}
+
+.big {
+  background-image: url(http://fillmurray.com/500/500);
+  width: 500px;
+  height: 500px;
+  transition: all 2s ease;
+  /*transition-property: width;
+  transition-duration: 1s;
+  transition-delay: 2s;*/
+}
+
+.big:hover{
+  /*width: 100px;
+  height: 100px;*/
+  /*opacity: 0.5;*/
+  transform: rotate(1200deg) scale(4) translate(200px, 300px);
+  /*transform: translate(200px, 300px);*/
 }
 
 .fixed {
