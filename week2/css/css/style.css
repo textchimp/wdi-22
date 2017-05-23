@@ -1,0 +1,40 @@
+body {
+  height: 9999px;
+}
+
+.box {
+  width: 150px;
+  height: 150px;
+  text-align: center;
+  line-height: 150px;
+  border: 1px solid black;
+}
+
+.static {
+  position: static;
+  left: 200px;
+  top: 200px;
+  /* This is the default */
+}
+
+.relative {
+  position: relative; /* relative to default static position */
+  left: 200px;
+  top: 200px;
+}
+
+.absolute {
+  position: absolute; /* relative to document or to nearest specifically-positioned ancestor (not including 'static') */
+  top: 50px;
+  left: 100px;
+}
+
+.fixed {
+  position: fixed;
+  top: 50px;
+  right: 200px;
+
+  /*width: 100%;
+  background-color: black;
+  color: pink;*/
+}
