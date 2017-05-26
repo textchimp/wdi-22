@@ -1,0 +1,93 @@
+
+* {
+  box-sizing: border-box;
+}
+
+div > span > a {
+  color: green;
+  border: 2px solid pink;
+
+}
+
+img[src="murray"] {
+  border: 10px solid yellow;
+}
+
+input[type="text"] {
+}
+
+div.me{
+  color: green;
+}
+p:not(.comic){
+}
+
+
+span {
+  /*color: red;*/
+}
+
+h1:visited{
+  /*text-decoration: underline;*/
+  border: 1px solid red;
+}
+
+.redborder{
+  border: 1px solid red;
+}
+
+img.float-demo.redborder{
+  background-color: purple;
+}
+
+.left{
+  display: inline-block;
+  width: 70%;
+}
+
+.right{
+  display: inline-block;
+  width: 30%;
+}
+
+
+.float-demo{
+  float: left;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  /*padding: 0 20px 20px 0;*/
+  padding: 20px 50px;
+  margin: 50px;
+  /*background-color: brown;*/
+}
+/*
+div {
+  border: 1px dashed green;
+  display: inline-block;
+  width: 500px;
+}*/
+/*
+p a {
+  color: purple;
+  font-size: 20pt;
+}*/
+
+span {
+  border: 1px solid red;
+}
+
+.comic {
+  font-family: "Comic Sans MS";
+  color: red;
+}
+
+p#ulist {
+  color: brown;
+  font-size: 60pt;
+}
+
+h1 {
+  /*font-size: 40px; */
+  font-family: "Comic Sans MS";
+  color: hotpink;
+}
