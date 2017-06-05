@@ -1,4 +1,4 @@
-// Part 1
+    // Part 1
 var rectangle = {
   length: 4,
   width: 4
@@ -23,7 +23,10 @@ var triangle = {
   sideC: 5
 };
 
+
+
 // Factory pattern:
+
 
 var TriangleFactory = function ( a, b, c ) {
   var tri = {};
