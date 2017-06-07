@@ -18,6 +18,16 @@ $output_start = "<html>
 
 $output_end = "</body></html>"
 
+
+get "/ask_name" do
+  erb :ask_name
+end
+
+get '/show_name' do
+  # binding.pry
+  erb :show_name
+end
+
 get "/hello" do
   # matches the localhost:4567/hello URL
   a = 10
@@ -31,17 +41,9 @@ get "/colour/:col" do
 end
 
 get "/hello/:name" do  # /hello/edgy
-  # binding.pry
-
   # params[ "name" ] = "edgy";
-  #
-  # if params[ "name" ] == "edgy"
-  #   "get lost jerk!"
-  # else
-  #   "Hello friend"
-  # end
 
-  "Hello, #{ params["name"] }"
+  erb :hello
 
 end
 
@@ -60,16 +62,18 @@ get "/mult/:x/:y" do
 end
 
 get "/calc/:op/:x/:y" do
-  x = params["x"].to_i
-  y = params["y"].to_i
-  op = params["op"]
+  @x = params["x"].to_i
+  @y = params["y"].to_i
+  @op = params["op"]
 
   # x + y
   # x.+( y )
-  result = x.send(op, y)  # x.+( y )  or x.*( y ) etc
+  # x.+( y )  or x.*( y ) etc
+  @result = @x.send(@op, @y)
 
+  # $output_start + "The result of #{x} #{op} #{y} = #{result}" + $output_end
 
-  $output_start + "The result of #{x} #{op} #{y} = #{result}" + $output_end
+  erb :calc      #"views/calc.erb"
 
 end
 
