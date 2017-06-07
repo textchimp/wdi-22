@@ -1,6 +1,7 @@
 require "sinatra"
 require "sinatra/reloader"
 require "pry"
+require "HTTParty"
 
 def html_header( colour )
     "<html>
@@ -19,13 +20,34 @@ $output_start = "<html>
 $output_end = "</body></html>"
 
 
-get "/ask_name" do
+get "/search_form" do
+  erb :searchform
+end
+
+get "/movie_search" do
+  query = params[ "movie_query" ]
+  url   = "http://THE-API-URL-INCLUDING-THE-API-KEY" + params[ "movie_query"]
+  mdata = HTTParty.get url
+  @results = mdata[ "results" ]
+
+  # binding.pry
+
+  erb :movie_search_results
+
+end
+
+get "/movie_details/:id" do
+
+end
+
+get "/ask" do
   erb :ask_name
 end
 
 get '/show_name' do
-  # binding.pry
+
   erb :show_name
+
 end
 
 get "/hello" do

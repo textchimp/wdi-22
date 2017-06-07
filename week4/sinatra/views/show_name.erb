@@ -1,2 +1,13 @@
 
 You said your name was <%= params["first_name"] %>
+
+<% if @movies %>
+
+  <% @movies.each do |movie| %>
+
+    <p>NAME: <%= movie["name"] %>  </p>
+    <a href="/movie_details/<%= movie["id"] %>"> movie name
+
+  <% end %>
+
+<% end %><%# each %>
