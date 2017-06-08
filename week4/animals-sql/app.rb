@@ -26,6 +26,16 @@ def query_db( sql )
   result
 end
 
+
+# delete an animal from the table
+get "/animals/:id/delete" do
+
+  query_db "DELETE FROM animals WHERE id = #{ params["id"] };"
+  redirect "/animals"
+
+end
+
+
 # update the animal (from the form submit)
 post "/animals/:id" do
 
@@ -48,7 +58,6 @@ get "/animals/:id/edit" do
   id = params["id"]
   @animal = query_db "SELECT * FROM animals WHERE id = #{id};"
   @animal = @animal.first   # same as @animal[0], just get the first item
-
 
   erb :edit
 end
@@ -87,6 +96,8 @@ INSERT INTO animals( species, image, description, legs ) VALUES(
   '#{ params["description"] }',
    #{ params["legs"] }
 );"
+
+# params["description"]  comes from <input type="text" name="description">
 
   # # Create a connection to the database
   # db = SQLite3::Database.new 'database.db'
