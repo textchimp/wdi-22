@@ -52,7 +52,7 @@ get "/animals/:id/delete",
 
   query_db "DELETE FROM animals WHERE id = #{ params["id"] };"
   redirect "/animals"
-  
+
 end
 
 
@@ -84,6 +84,12 @@ end
 
 
 
+# show the New form for an Animal
+get "/animals/new" do
+  erb :new
+end
+
+
 # retrieve a specific animal (1 row) from the table by ID
 get "/animals/:id" do
   id = params["id"]
@@ -100,12 +106,6 @@ get "/animals" do
   @animals = query_db "SELECT * FROM animals;"
   erb :index
 end
-
-# show the New form for an Animal
-get "/animals/new" do
-  erb :new
-end
-
 
 post "/animals" do
 
