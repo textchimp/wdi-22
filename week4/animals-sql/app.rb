@@ -3,25 +3,27 @@ require "sinatra/reloader"
 require "pry"
 require "sqlite3"
 
-require "active_record"
 
-ActiveRecord::Base.establish_connection(
-  :adapter  => 'sqlite3',
-  :database => 'database.db'
-)
-
-ActiveRecord::Base.logger = Logger.new( STDERR )
-
-
-after do
-  ActiveRecord::Base.connection.close
-end
-
-class Animal < ActiveRecord::Base
-end
-
-binding.pry
-
+# require "active_record"
+#
+# ActiveRecord::Base.establish_connection(
+#   :adapter  => 'sqlite3',
+#   :database => 'database.db'
+# )
+#
+# ActiveRecord::Base.logger = Logger.new( STDERR )
+#
+#
+# after do
+#   ActiveRecord::Base.connection.close
+# end
+#
+# class Animal < ActiveRecord::Base
+# end
+#
+# binding.pry
+#
+# pry> Animal.all
 
 # /animals?name=dog  =>  params["name"]  => "dog"
 
