@@ -3,10 +3,10 @@ require "sinatra/reloader"
 require "pry"
 require "sqlite3"
 
-# /animals?name=dog  =>  params["name"]
+# /animals?name=dog  =>  params["name"]  => "dog"
 
 # /animals/25
-# /animals/:id       => params["id"]
+# /animals/:id       => params["id"]  => 25
 
 # POST to action="/animals" from a form
 # /animals           => params["species"], params["legs"]
@@ -15,13 +15,10 @@ require "sqlite3"
 def query_db( sql )
   # Create a connection to the database
   db = SQLite3::Database.new 'database.db'
-
   # Ask for the information in a nicer format
   db.results_as_hash = true
-
   # Show the SQL that was generated in the server output
   puts sql
-
   # Execute a line of SQL and store the result
   result = db.execute sql
   db.close
@@ -29,13 +26,50 @@ def query_db( sql )
   result
 end
 
+# update the animal (from the form submit)
+post "/animals/:id" do
+
+  sql = "UPDATE animals SET
+species = '#{ params["species"] }',
+image = '#{ params["image"] }',
+description = '#{ params["description"] }',
+legs = #{ params["legs"] }
+WHERE id = #{ params["id"] };"
+
+  query_db sql
+
+  redirect "/animals/#{ params["id"]}"
+
+end
+
+# show the edit form for an animal (UPDATE)
+get "/animals/:id/edit" do
+
+  id = params["id"]
+  @animal = query_db "SELECT * FROM animals WHERE id = #{id};"
+  @animal = @animal.first   # same as @animal[0], just get the first item
+
+
+  erb :edit
+end
+
+
+
+# retrieve a specific animal (1 row) from the table by ID
+get "/animals/:id" do
+  id = params["id"]
+  @animal = query_db "SELECT * FROM animals WHERE id = #{id};"
+
+  @animal = @animal.first   # same as @animal[0], just get the first item
+
+  erb :show
+end
+
+
+# get every row from the animals table
 get "/animals" do
-
-  # get every row from the animals table
   @animals = query_db "SELECT * FROM animals;"
-
   erb :index
-
 end
 
 # show the New form for an Animal
@@ -45,9 +79,6 @@ end
 
 
 post "/animals" do
-
-# params["species"]
-# params["image"]
 
   sql = "
 INSERT INTO animals( species, image, description, legs ) VALUES(
@@ -64,7 +95,9 @@ INSERT INTO animals( species, image, description, legs ) VALUES(
 
   query_db( sql )
 
-  "It worked! SQL: " + sql
+  # "It worked! SQL: " + sql
+
+  redirect "/animals"
 
 end
 

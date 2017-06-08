@@ -6,4 +6,13 @@ body {
 
 img {
   max-width: 500px;
+  max-height: 300px;
+}
+
+#bill {
+  max-width: 100px !important;
+}
+
+a.edit {
+  font-size: 8pt;
 }

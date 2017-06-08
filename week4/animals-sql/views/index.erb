@@ -2,16 +2,9 @@
 
 <% @animals.each do |animal| %>
 
-<p>Name: <%= animal["species"] %></p>
-
-<img src="<%= animal["image"] %>">
-
-<p>Description: <%= animal["description"] %></p>
-
-<p>Legs: <%= animal["legs"] %></p>
-
-<% if animal != @animals.last %>
-  <hr>
-<% end %>
+<p>
+ <a href="/animals/<%= animal["id"] %>"><%= animal["species"] %></a>
+ <a href="/animals/<%= animal["id"] %>/edit"  class="edit" >edit</a>
+</p>
 
 <% end %>
