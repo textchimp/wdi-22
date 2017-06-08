@@ -48,7 +48,7 @@ end
 
 
 # delete an animal from the table
-get "/animals/:id/delete",
+get "/animals/:id/delete" do
 
   query_db "DELETE FROM animals WHERE id = #{ params["id"] };"
   redirect "/animals"
