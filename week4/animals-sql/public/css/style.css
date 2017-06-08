@@ -3,3 +3,7 @@ body {
   background-color: hotpink;
   font-family: "Comic Sans MS", sans-serif;
 }
+
+img {
+  max-width: 500px;
+}
