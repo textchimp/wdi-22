@@ -3,6 +3,26 @@ require "sinatra/reloader"
 require "pry"
 require "sqlite3"
 
+require "active_record"
+
+ActiveRecord::Base.establish_connection(
+  :adapter  => 'sqlite3',
+  :database => 'database.db'
+)
+
+ActiveRecord::Base.logger = Logger.new( STDERR )
+
+
+after do
+  ActiveRecord::Base.connection.close
+end
+
+class Animal < ActiveRecord::Base
+end
+
+binding.pry
+
+
 # /animals?name=dog  =>  params["name"]  => "dog"
 
 # /animals/25
@@ -28,11 +48,11 @@ end
 
 
 # delete an animal from the table
-get "/animals/:id/delete" do
+get "/animals/:id/delete",
 
   query_db "DELETE FROM animals WHERE id = #{ params["id"] };"
   redirect "/animals"
-
+  
 end
 
 
