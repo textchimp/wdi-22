@@ -21,6 +21,20 @@ class ArtistsController < ApplicationController
     @artist = Artist.find params["id"]
   end
 
+  def update
+    artist = Artist.find params["id"]
+
+    artist.update({
+      name: params["name"],
+      nationality: params["nationality"],
+      dob: params["dob"],
+      period: params["period"],
+      image: params["image"]
+    })
+
+    redirect_to  "/artists/#{ artist.id }"  # go to show page
+  end
+
   def index
     @artists = Artist.all
   end
