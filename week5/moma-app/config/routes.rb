@@ -1,10 +1,26 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  # create
+  get "/works/new" => "works#new"
+  post "/works"  => "works#create"
+
+  # read
+  get "/works" => "works#index"
+  get "/works/:id" => "works#show"
+
+  # update
+  get  "/works/:id/edit" => "works#edit"
+  post "/works/:id"      => "works#update"
+
+  # delete
+  delete "/works/:id" => "works#destroy"
+
+  ######################## artists
 
   delete "/artists/:id" => "artists#destroy"
 
   get "/artists/new"  => "artists#new" # empty form for new artist
-  post "/artists/new" => "artists#create"  # handle submitted form and create new row in table
+  post "/artists" => "artists#create"  # handle submitted form and create new row in table
 
   get "/artists/:id/edit" => "artists#edit"
   post "/artists/:id" => "artists#update"

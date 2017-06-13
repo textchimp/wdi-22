@@ -9,6 +9,7 @@
 puts "Running DB seeds..."
 
 Artist.destroy_all
+Work.destroy_all
 
 a1 = Artist.create({
   name: 'Joan Miro',
@@ -33,6 +34,26 @@ a3 = Artist.create({
   period: '20th Century',
   image: 'https://www.nga.gov/content/dam/ngaweb/features/slideshows/Mark%20Rothko/detail-rothko.jpg'
 })
+
+
+w1 = Work.create({
+  title: "The Flight of the Dragonfly in Front of the Sun",
+  year: "1968",
+  medium: "Oil on canvas",
+  style: "Abstract",
+  image: "http://www.joan-miro.net/images/paintings/the-flight-of-the-dragonfly-in-front-of-the-sun.jpg"
+})
+
+w2 = Work.create({
+  title: "Gothic Landscape",
+  year: "1961",
+  medium: "Oil on canvas",
+  style: "Abstract Expressionism",
+  image: "http://www.tate.org.uk/art/images/work/T/T03/T03291_10.jpg"
+})
+
+
+
 
 
 puts "Done!"

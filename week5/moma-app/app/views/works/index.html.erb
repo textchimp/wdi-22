@@ -1,0 +1,15 @@
+
+<h2>Works Index</h2>
+
+<ul>
+<% @works.each do |work| %>
+
+  <li>
+    <a href="/works/<%= work.id %>"><%= work.title %></a>
+
+    <a data-method="delete" href="/works/<%= work.id %>">Delete</a>
+
+  </li>
+
+<% end %>
+</ul>

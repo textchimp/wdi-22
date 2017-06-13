@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170613010607) do
+ActiveRecord::Schema.define(version: 20170613052747) do
 
   create_table "artists", force: :cascade do |t|
     t.text "name"
@@ -18,6 +18,16 @@ ActiveRecord::Schema.define(version: 20170613010607) do
     t.date "dob"
     t.text "period"
     t.text "image"
+  end
+
+  create_table "works", force: :cascade do |t|
+    t.text     "title"
+    t.text     "year"
+    t.text     "medium"
+    t.text     "style"
+    t.text     "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
