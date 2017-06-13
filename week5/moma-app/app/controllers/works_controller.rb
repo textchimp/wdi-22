@@ -2,6 +2,7 @@ class WorksController < ApplicationController
 
   def new
     @work = Work.new
+    @artists = Artist.all
   end
 
   def create

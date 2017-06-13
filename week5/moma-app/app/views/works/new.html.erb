@@ -3,6 +3,11 @@
 <%= form_for @work do |f| %>
 
   <p>
+  <%= f.label :artist_id %>
+  <%= f.collection_select( :artist_id, @artists, :id, :name, include_blank: true ) %>
+  </p>
+
+  <p>
     <%= f.label :title %>
     <%= f.text_field :title, required: true %>
   </p>
@@ -26,6 +31,8 @@
   <%= f.label :image %>
   <%= f.text_field :image, required: true %>
 </p>
+
+
 
 <%= f.submit %>
 

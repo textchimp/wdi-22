@@ -10,7 +10,9 @@
 #  image      :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  artist_id  :integer
 #
 
 class Work < ApplicationRecord
+  belongs_to :artist, optional: true
 end
