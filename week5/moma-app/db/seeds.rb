@@ -6,6 +6,9 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+puts "Running DB seeds..."
+
+Artist.destroy_all
 
 a1 = Artist.create({
   name: 'Joan Miro',
@@ -30,3 +33,6 @@ a3 = Artist.create({
   period: '20th Century',
   image: 'https://www.nga.gov/content/dam/ngaweb/features/slideshows/Mark%20Rothko/detail-rothko.jpg'
 })
+
+
+puts "Done!"
