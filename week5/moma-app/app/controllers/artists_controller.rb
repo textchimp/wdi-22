@@ -17,6 +17,10 @@ class ArtistsController < ApplicationController
     redirect_to "/artists/#{ artist.id }"  # go to show page
   end
 
+  def edit
+    @artist = Artist.find params["id"]
+  end
+
   def index
     @artists = Artist.all
   end
