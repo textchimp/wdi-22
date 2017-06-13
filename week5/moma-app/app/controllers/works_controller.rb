@@ -8,13 +8,17 @@ class WorksController < ApplicationController
   def create
     # raise 'hell'
     work = Work.create work_params
-    redirect_to "/works"
+    redirect_to "/works/#{ work.id }"
   end
 
   def edit
+    @work = Work.find params["id"]
+    @artists = Artist.all
   end
 
   def update
+    Work.update work_params
+    redirect_to "/works/#{ params["id"] }"
   end
 
   def index

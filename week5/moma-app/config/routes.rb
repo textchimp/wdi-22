@@ -9,8 +9,9 @@ Rails.application.routes.draw do
   get "/works/:id" => "works#show"
 
   # update
-  get  "/works/:id/edit" => "works#edit"
-  post "/works/:id"      => "works#update"
+  get  "/works/:id/edit" => "works#edit", as: 'work' # need this 'as' for the 'form_for', long story
+  # post "/works/:id/edit"   => "works#update"
+  patch "/works/:id/edit"  => "works#update"  # need this 'patch' version for 'form_for'
 
   # delete
   delete "/works/:id" => "works#destroy"
