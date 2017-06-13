@@ -21,6 +21,7 @@ class WorksController < ApplicationController
   end
 
   def show
+    @work = Work.find params["id"]   # /works/12  or similar
   end
 
   def destroy

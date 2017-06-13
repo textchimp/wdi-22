@@ -1,2 +1,16 @@
-<h1>Works#show</h1>
-<p>Find me in app/views/works/show.html.erb</p>
+
+<h2>Work Details</h2>
+
+<p>Title: <%= @work.title %></p>
+
+<p>Medium: <%= @work.medium %></p>
+
+<p>Year: <%= @work.year %></p>
+
+<p>Style: <%= @work.style %></p>
+
+<a href="/works/<%= @work.id %>/edit">Edit Work Details</a>
+
+<br>
+
+<img class="work_photo" src="<%= @work.image %>" alt="">
