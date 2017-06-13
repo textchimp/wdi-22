@@ -5,9 +5,12 @@
 <% @artists.each do |artist| %>
 
   <li>
-    <a href="/artists/<%= artist.id %>">
-      <%= artist.name %>
-    </a>
+    <a href="/artists/<%= artist.id %>"><%= artist.name %></a>
+
+    <!-- <%= link_to "Delete", "/artists/#{ artist.id }", method: :delete %> -->
+
+    <a data-method="delete" href="/artists/<%= artist.id %>">Delete</a>
+
   </li>
 
 <% end %>

@@ -44,6 +44,13 @@ class ArtistsController < ApplicationController
     @artist = Artist.find params["id"]
   end
 
+  def destroy
+    # artist = Artist.find params["id"]
+    # artist.destroy
+    Artist.find( params["id"] ).destroy
+
+    redirect_to "/artists"
+  end
 
 
 end
