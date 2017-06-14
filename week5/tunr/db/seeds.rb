@@ -41,6 +41,9 @@ g4 = Genre.create name: "Post-Jazz"
 g5 = Genre.create name: "Math Rock"
 g6 = Genre.create name: "Glam Rock"
 
+puts "Created #{ Genre.all.length } genres."
+
+
  # Add  "All By Electricity"(s1) and "Books on Trains"(s2) to the songs for "Shipping News"(a1)
 a1.songs << s1 << s2
 
@@ -55,5 +58,21 @@ alb3.songs << s4
 alb4.songs << s6
 puts "Album '#{ alb1.name }' has #{ alb1.songs.length } songs."
 
+# add a bunch of genres to each song
+s1.genres << g1 << g2 << g5 << g3
+s2.genres << g1 << g2 << g5 << g3
+s3.genres << g1
+s4.genres << g3 << g5
+s5.genres << g3
+s6.genres << g4 << g3
+
+# from the other direction: add some songs to a genre
+g6.songs << s4 << s5
+
+Genre.all.each do |g|
+  puts '-' * 50
+  puts "Genre '#{ g.name }' has songs:"
+  puts g.songs.pluck :name
+end
 
 puts "Done!"
