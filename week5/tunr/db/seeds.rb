@@ -75,4 +75,29 @@ Genre.all.each do |g|
   puts g.songs.pluck :name
 end
 
+Mixtape.destroy_all
+m1 = Mixtape.create title: "Make-out Music", is_fire: true
+m2 = Mixtape.create title: "Boat Jams", is_fire: true
+m3 = Mixtape.create title: "House-cleaning", is_fire: true
+
+m1.songs << s3 << s5 << s6 << s4
+m2.songs << s2 << s1
+
+s6.mixtapes << m2 << m3
+s3.mixtapes << m3
+
+puts "Song '#{ s3.name }' by '#{ s3.artist.name }' appears on mixtapes:"
+p s3.mixtapes.pluck :title
+
+
+Mixtape.all.each do |m|
+  puts '-' * 50
+  puts "Mixtape '#{ m.title }' has songs:"
+  p m.songs.pluck :name
+  puts "SO FIRE!!!1" if m.is_fire
+end
+
+
+
+
 puts "Done!"
