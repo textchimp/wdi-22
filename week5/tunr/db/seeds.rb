@@ -5,3 +5,39 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Artist.destroy_all
+a1 = Artist.create name: "Shipping News"
+a2 = Artist.create name: "June of 44"
+a3 = Artist.create name: "Radiohead"
+a4 = Artist.create name: "Dawn of Midi"
+
+puts "Created #{ Artist.all.length } artists."
+
+Song.destroy_all
+s1 = Song.create name: "All By Electricity"
+s2 = Song.create name: "Books on Trains"
+s3 = Song.create name: "Have a Safe Trip, Dear"
+s4 = Song.create name: "Identikit"
+s5 = Song.create name: "Creep"
+s6 = Song.create name: "Io"
+
+puts "Created #{ Song.all.length } songs."
+
+Album.destroy_all
+alb1 = Album.create name: "Save Everything", release_date: '1997'
+alb2 = Album.create name: "Engine Takes to the Water", release_date: '1995'
+alb3 = Album.create name: "A Moon-Shaped Pool", release_date: '2016'
+alb4 = Album.create name: "Dysnomia", release_date: '2013'
+
+ # Add  "All By Electricity"(s1) and "Books on Trains"(s2) to the songs for "Shipping News"(a1)
+a1.songs << s1 << s2
+
+a2.songs << s3
+a3.songs << s4 << s5
+a4.songs << s6
+
+puts "Artist '#{ a1.name }' has #{ a1.songs.length } songs."
+
+
+puts "Done!"
