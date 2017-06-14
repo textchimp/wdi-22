@@ -11,4 +11,9 @@
 
 class Artist < ApplicationRecord
   has_many :songs, dependent: :destroy
+
+  has_many :genres, through: :songs
+
+  has_many :albums, through: :songs
+
 end

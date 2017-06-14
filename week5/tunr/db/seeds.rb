@@ -29,6 +29,7 @@ alb1 = Album.create name: "Save Everything", release_date: '1997'
 alb2 = Album.create name: "Engine Takes to the Water", release_date: '1995'
 alb3 = Album.create name: "A Moon-Shaped Pool", release_date: '2016'
 alb4 = Album.create name: "Dysnomia", release_date: '2013'
+alb5 = Album.create name: "Pablo Honey", release_date: '1993'
 
 puts "Created #{ Album.all.length } albums."
 
@@ -56,6 +57,8 @@ alb1.songs << s1 << s2
 alb2.songs << s3
 alb3.songs << s4
 alb4.songs << s6
+alb5.songs << s5
+
 puts "Album '#{ alb1.name }' has #{ alb1.songs.length } songs."
 
 # add a bunch of genres to each song
