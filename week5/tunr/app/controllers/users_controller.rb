@@ -3,6 +3,8 @@ class UsersController < ApplicationController
   before_action :get_user,       only: [ :show, :edit, :update ]
   before_action :check_if_admin, only: [ :index ]
 
+  before_action :check_if_logged_in, only: [ :mixtape_create ]
+
   def get_user
     @user = User.find params["id"]
   end
@@ -13,9 +15,14 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = User.create user_params
-    session[:user_id] = user.id  # perform login (set session)
-    redirect_to user_path(user.id)   # /users/17
+    @user = User.create user_params
+    if @user.id.present?
+      session[:user_id] = @user.id  # perform login (set session)
+      redirect_to user_path(@user.id)   # /users/17
+    else
+      render :new
+    end
+
   end
 
   def index
