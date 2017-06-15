@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
 
-  before_action :get_user, only: [ :show, :edit, :update ]
+  before_action :get_user,       only: [ :show, :edit, :update ]
+  before_action :check_if_admin, only: [ :index ]
 
   def get_user
     @user = User.find params["id"]
@@ -33,7 +34,9 @@ class UsersController < ApplicationController
 
   def update
     # @user = User.find params["id"]   # now in before_action
-    redirect_to root_path unless @current_user == @user
+    # redirect_to root_path unless @current_user == @user
+
+    @user = @current_user # makes sure user can only edit their own profile
 
     @user.update user_params
     redirect_to user_path( params["id"] )
