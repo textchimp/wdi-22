@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  root to: "users#index"
+
   get     '/login' => 'session#new'       # login form
   post    '/login' => 'session#create'   # check credentials & attempt login (set session)
   delete  '/login' => 'session#destroy'  # logout (destroy session)
