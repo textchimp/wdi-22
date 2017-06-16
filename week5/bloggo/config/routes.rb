@@ -5,8 +5,8 @@ Rails.application.routes.draw do
   resources :users
   resources :posts
 
-  get 'session/new' => 'session#new'
-  get 'session/create' => 'session#create'
-  get 'session/destroy' => 'session#destroy'
+  get    '/login' => 'session#new'
+  post   '/login' => 'session#create'
+  delete '/login' => 'session#destroy'
 
 end

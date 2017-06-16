@@ -10,6 +10,17 @@
 
   <body>
     <%= image_tag ['bloggo.png', 'bloggo2.gif', 'bloggo3.gif'].sample, id: 'mainLogo' %>
+
+    <nav>
+      <% unless @current_user.present? %>
+        <%= link_to 'Login', login_path %>
+      <% else %>
+        <%# User IS logged in %>
+        Welcome, <%= link_to @current_user.name, user_path( @current_user ) %> |
+        <%= link_to 'Logout', login_path, method: :delete %>
+      <% end %>
+    </nav>
+
     <%= yield %>
   </body>
 </html>
