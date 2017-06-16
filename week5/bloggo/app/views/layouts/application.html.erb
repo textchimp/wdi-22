@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bloggo</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+  </head>
+
+  <body>
+    <%= image_tag ['bloggo.png', 'bloggo2.gif', 'bloggo3.gif'].sample, id: 'mainLogo' %>
+    <%= yield %>
+  </body>
+</html>
