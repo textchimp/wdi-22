@@ -5,6 +5,7 @@
 
   <li><%= p.title %> - by <%= p.user.name %></li>
   <%= image_tag p.image, class: 'doggo' %>
+  <br>(<%= time_ago_in_words p.created_at %> ago)
 
 <% end %>
 </ul>
