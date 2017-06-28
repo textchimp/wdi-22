@@ -1,0 +1,12 @@
+<h1>Messages Index</h1>
+
+<ul>
+<% @messages.each do |m| %>
+  <li>
+  From: <%= m.author %>, posted <%= time_ago_in_words m.created_at %> ago
+  <blockquote>
+  <%= m.content %>
+  </blockquote>
+  </li>
+<% end %>
+</ul>

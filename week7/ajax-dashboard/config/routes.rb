@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  get '/messages/' => 'messages#index'
+  get '/messages/:id' => 'messages#show'
+
   root 'dashboard#info'
   get '/info' => 'dashboard#info'
   get '/info-api' => 'dashboard#info_api'
