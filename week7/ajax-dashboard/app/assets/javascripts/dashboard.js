@@ -4,7 +4,7 @@ $(document).ready(function(){
 
   var getDashboardData = function(){
     $.ajax({
-      url: '/info-api'
+      url: 'http://daeaf8be.ngrok.io/info-api'
     })
     .done(function(res){
 
@@ -22,6 +22,6 @@ $(document).ready(function(){
     });
   };
 
-  setInterval(getDashboardData, 3000);
+  // setInterval(getDashboardData, 3000);
 
 });
