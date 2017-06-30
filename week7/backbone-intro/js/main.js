@@ -20,6 +20,7 @@ var Animal = Backbone.Model.extend({
   defaults: {
     looksWeird: true,
     hasPouch: false,
+    alive: true
   }
 });
 
@@ -32,12 +33,12 @@ var kangaroo = new Animal({
 
 var butterfly = new Animal({
   name: 'Helga',
-  type: 'Monarch'
+  type: 'Monarch Butterfly'
 });
 
 var badger = new Animal({
   name: 'Chris Barnaby',
-  type: 'Honey',
+  type: 'Honey Badger',
   lovesBeer: true
 });
 
@@ -69,14 +70,42 @@ var Animals = Backbone.Collection.extend({
 
 var animals = new Animals([ kangaroo, badger ]);
 
-animals.add({
-  name: 'Edgy',
-  type: 'Edgehog',
-  looksWeird: true,
-  lovesBeer: true
-})
+animals.add([
+  {
+    name: 'Edgy',
+    type: 'Edgehog',
+    looksWeird: true,
+    lovesBeer: true
+  },
+  {
+    name: 'Terence',
+    type: 'Pink Galah',
+    alive: false
+  },
+  {
+    name: 'Kevin',
+    type: 'Kea'
+  },
+  {
+    name: 'Quincey',
+    type: 'Quokka',
+    alive: false
+  }
+]);
 
-animals.remove( badger );
+animals.each(function( animal ){
+  var name = animal.get('name');
+  var type = animal.get('type');
+  var living = animal.get('alive') ? 'alive' : 'dead (RIP)';
+  console.log('Here is ' + name + ', the ' + type + '. It is ' + living + '.');
+});
 
-var animalsToRemove = animals.where({lovesBeer: true});
-animals.remove( animalsToRemove );
+var corpses = animals.where({alive: false})
+animals.remove( corpses );
+
+//
+//
+// animals.remove( badger );
+//
+// var animalsToRemove = animals.where({lovesBeer: true});
+// animals.remove( animalsToRemove );
