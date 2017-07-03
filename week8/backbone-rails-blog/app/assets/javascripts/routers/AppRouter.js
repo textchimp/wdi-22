@@ -21,6 +21,15 @@ app.AppRouter = Backbone.Router.extend({
 
   showPost: function( id ){
     // Find the Post by ID, and use PostView to render it
+    console.log('Navigated to showPost() route handler');
+
+    var post = app.posts.get( id );
+
+    var pv = new app.PostView({
+      model: post
+    });
+    pv.render();
+
   }
 
 
