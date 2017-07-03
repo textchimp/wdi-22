@@ -41,6 +41,16 @@ gaZoo.add([
  var AnimalView = Backbone.View.extend({
    el: "#main",
 
+    events: {
+      "click h1": "showAnimal"
+    },
+
+    showAnimal: function( event ){
+      console.log('h1 clicked:',  this.model );
+      router.navigate( "animals/c1" );
+    },
+
+
    initialize: function(){
      console.log('Initialized a new AnimalView.');
    }, // init
@@ -129,12 +139,25 @@ gaZoo.add([
 //  zooCollectionView.render();
 
 
+ var ErrorView = Backbone.View.extend({
+    el: "#main",
+    render: function(){
+      this.$el.html("<h1>Something went horribly wrong.</h1>");
+    }
+ });
+
 var Router = Backbone.Router.extend({
   routes: {
     '': 'showZoo', // default (root) route, show index page
     'animals': 'showZoo',
     'animals/:id': 'showAnimal',  // show details page for single animal
     '*args': 'errorPage' // catch-all for unsupported routes
+  },
+
+  errorPage: function(args){
+    console.log('args: ', args);
+    var ev = new ErrorView();
+    ev.render();
   },
 
   showZoo: function(){
@@ -146,10 +169,11 @@ var Router = Backbone.Router.extend({
     zv.render();
   },
 
-  showAnimal: function(){
+  showAnimal: function(id){
     // Render the view for a single, specific animal
+    var animal = gaZoo.get(id);
     var av = new AnimalView({
-      model: giraffe
+      model: animal
     });
     $('#main').empty();
     av.render();
