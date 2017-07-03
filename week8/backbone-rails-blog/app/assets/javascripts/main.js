@@ -1,5 +1,10 @@
 var app = app || {};
 
+_.templateSettings = {
+     evaluate : /\{\[([\s\S]+?)\]\}/g,
+     interpolate : /\{\{([\s\S]+?)\}\}/g
+};
+
 app.posts = new app.Posts();
 
 app.router = new app.AppRouter();

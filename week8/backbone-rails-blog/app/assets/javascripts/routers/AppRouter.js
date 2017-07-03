@@ -13,6 +13,10 @@ app.AppRouter = Backbone.Router.extend({
   index: function(){
     // Render an AppView
     console.log('Index action started.');
+    var av = new app.AppView({
+      collection: app.posts
+    });
+    av.render();
   },
 
   showPost: function( id ){

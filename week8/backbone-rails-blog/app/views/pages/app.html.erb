@@ -1,2 +1,28 @@
-<h1>Pages#app</h1>
-<p>Find me in app/views/pages/app.html.erb</p>
+<!-- This is the top-level div to which our AppView renders -->
+<div id="app"></div>
+
+<script type="html/template" id="AppViewTemplate">
+  <div id="appView">
+    <h1>My Blog with all my feelings</h1>
+    <nav>
+      <a href="#">All Posts</a>
+      <a href="#">A Post</a>
+    </nav>
+    <hr>
+    <ul id="posts"></ul>
+  </div>
+</script>
+
+<script type="html/template" id="PostViewTemplate">
+  <div id="postView">
+    <h2>
+      {{ title }}
+    </h2>
+    <h3>
+      By: {{ author }}
+    </h3>
+    <p>
+      {{ content }}
+    </p>
+  </div>
+</script>
