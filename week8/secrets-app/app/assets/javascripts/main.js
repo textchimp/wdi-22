@@ -3,8 +3,9 @@ var app = app || {};
 // Create instance of router for the whole app
 app.router = new app.AppRouter();
 
-// Create instance of secrets collection used by the whole app
 app.secrets = new app.Secrets();
+
+// Create instance of secrets collection used by the whole app
 
 // app.secretSecrets = new app.Secrets();
 
@@ -13,9 +14,15 @@ app.secrets = new app.Secrets();
 $(document).ready(function(){
 
   // Load all secrets from the Rails DB into the collection using AJAX
-  app.secrets.fetch().done(function(){
-    // Once secrets are finished loading:
-    Backbone.history.start();
-  });
+  Backbone.history.start();
+
+  app.secrets.fetch();
+
+  // Check for new secrets on the server every 2s
+  // (they will be automatically rendered thanks to our
+  // collection's add event handler)
+  window.setInterval(function(){
+    app.secrets.fetch();
+  }, 2000);
 
 });

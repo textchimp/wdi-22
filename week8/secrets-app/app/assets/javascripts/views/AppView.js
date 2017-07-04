@@ -7,12 +7,11 @@ app.AppView = Backbone.View.extend({
 
     var rawTemplate = $('#AppViewTemplate').html();
     this.$el.html( rawTemplate );
+    console.log('APP VIEW RENDERED TEMPLATE');
     //$('#app').html('content');
 
     var secretInputView = new app.SecretInputView();
     secretInputView.render();
-
-
 
   }
 

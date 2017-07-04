@@ -9,11 +9,10 @@ app.SecretView = Backbone.View.extend({
   tagName: "li",
 
   render: function(){
-    console.log('attributes:', this.model.attributes);
     var content = this.model.get("content");
     this.$el.html( content );
     this.$el.prependTo( "#secrets" );
-    console.log('el', this.$el);
-    console.log( 'secrets list:', $("#secrets") );
+    var $secrets = $("#secrets");
+    console.log('element to prepend to: ', $secrets);
   }
 });

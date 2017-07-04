@@ -7,7 +7,7 @@ app.Secrets = Backbone.Collection.extend({
   initialize: function(){
 
     this.on("add", function( secret ){
-      console.log('A secret was added to the collection', secret);
+      console.log('A secret was added to the collection');
 
       var secretView = new app.SecretView({
         model: secret
