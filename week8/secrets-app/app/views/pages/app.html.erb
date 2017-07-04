@@ -1,2 +1,21 @@
-<h1>Pages#app</h1>
-<p>Find me in app/views/pages/app.html.erb</p>
+<div id="app">
+  This is where Backbone will load all the app HTML.
+</div>
+
+<script type="html/template" id="AppViewTemplate">
+  <h1>Our Secrets App</h1>
+  <hr/>
+
+  <div id="secretForm">
+    An instance of the SecretInputView will go here
+  </div>
+
+  <ul id="secrets">
+    <!-- Many instance of the SecretView will go here -->
+  </ul>
+</script>
+
+<script type="html/template" id="SecretInputViewTemplate">
+  <textarea cols="50" placeholder="Spill your guts..."></textarea><br>
+  <button>Blab</button>
+</script>
