@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src="/js/jquery.js"></script>
+  <script src="/js/underscore.js"></script>
+  <script src="/js/backbone.js"></script>
+  <script src="/js/models/Flight.js"></script>
+  <script src="/js/models/Reservation.js"></script>
+  <script src="/js/collections/Flights.js"></script>
+  <script src="/js/collections/Reservations.js"></script>
+  <script src="/js/views/AppView.js"></script>
+  <script src="/js/views/FlightListView.js"></script>
+  <script src="/js/views/FlightDetailView.js"></script>
+  <script src="/js/views/FlightView.js"></script>
+  <script src="/js/views/SearchFlightView.js"></script>
+  <script src="/js/views/ShowReservationView.js"></script>
+  <script src="/js/routers/AppRouter.js"></script>
+  <script src="/js/main.js"></script>
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div id = "app">
+  <!-- This is where the burning of the airlines should render and load the HTML. -->
+
+  <!-- hidden table -->
+
+
+</div>
+
+
+<!-- MAIN PAGE SEARCH TEMPLATE  -->
+<script type="html/javascript" id="AppViewTemplate">
+
+
+  <h1>Inferno Airlines</h1>
+
+  <a href="app.html#flights">Search Flights</a>
+  <a href="app.html#reservations">My Reservations</a>
+
+
+  <div id="SearchView">
+
+  </div>
+
+
+  <table id="searchFlights" style="display: none">
+    <tr>
+      <th>Flight Number</th>
+      <th>Date</th>
+      <th>From</th>
+      <th>To</th>
+    </tr>
+  </table>
+
+  <div id="flightDetail">
+
+  </div>
+
+  <table id="reservations" style="display: none">
+    <tr>
+      <th>Flight Number</th>
+      <th>Date</th>
+      <th>From</th>
+      <th>To</th>
+      <th>Your Seat Reservation</th>
+    </tr>
+
+  </table>
+
+</script>
+
+
+
+<!-- TABLE FOR THE FLIGHT DETAILS  -->
+<script type="html/template" id="FlightViewTemplate">
+  <td>{{ id }}</td>
+  <td>{{ date }}</td>
+  <td>{{ from }}</td>
+  <td>{{ to }}</td>
+</script>
+
+
+
+<!-- SEARCH TEMPLATE -->
+<script type="html/template" id ="SearchViewTemplate">
+  <div class="SearchForm">
+    From:
+    <input id="from" type="text"/>
+    To:
+    <input id="to" type="text"/>
+    <button>Search</button>
+  </div>
+</script>
+
+
+<!-- FLIGHT DETAILS TEMPLACE  -->
+<script type="html/template" id="FlightDetailViewTemplate">
+  <h1>Flight number: {{ id }}</h1>
+  <h2>{{ date }}</h2>
+  <h2>{{ from }}</h2>
+  <h2>{{ to }}</h2>
+  <h3>Seats left:  {{airplane.rows * airplane.columns -  reservations.length }}</h3>
+  <h3>Capacity: {{airplane.rows * airplane.columns}}</h3>
+
+  <button id="saveSeat">Save Seat</button>
+  <div>
+  </div>
+</script>
+
+
+<script type="html/template" id="ShowReservationTemplate">
+
+    <td>{{ flight_id }}</td>
+    <td>{{ flight.date }}</td>
+    <td>{{ flight.from }}</td>
+    <td>{{ flight.to }}</td>
+    <td>{{ seat_no }}</td>
+
+</script>
+
+
+</body>
+</html>
