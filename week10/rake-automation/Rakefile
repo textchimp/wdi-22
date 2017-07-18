@@ -1,0 +1,60 @@
+# Things to do in the morning
+namespace :morning do
+
+  desc "Turn off the alarm"
+  task :turn_off_alarm do
+    puts "(:turn_off_alarm)"
+    # sh "date"
+    t =  `date`
+    puts "Time is: #{ t }"
+    puts "Turned off the stupid alarm oh god another day"
+  end
+
+  desc "Make myself a fancy man"
+  task :groom_self do
+    puts "(:groom_self)"
+    puts "Brush teeth"
+    puts "Butter armpits"
+    puts "Wax beard"
+  end
+
+  desc "Make some coffee (set an environment variable COFFEE_CUPS to customise)"
+  task :make_coffee do
+    puts "(:make_coffee)"
+    cups = ENV['COFFEE_CUPS'] || 2
+    puts "Make #{ cups } cups of coffee"
+    if ENV['EAT']
+      puts "Have breakfast"
+    end
+  end
+
+  desc "Walk the cat"
+  task :walk_cat do
+    puts "(:walk_cat)"
+    puts "Walk the cat, why does it not love this"
+  end
+
+  desc "Get ready for another exciting day"
+  task :get_ready => [:turn_off_alarm, :make_coffee, :groom_self, :walk_cat] do
+    puts "Ready to leave the house"
+  end
+
+end  # namespace :morning
+
+task :default => 'morning:get_ready'
+
+namespace :morning do
+  task :groom_self do
+    # This is ADDED to the code run by the existing :groom_self task
+    puts "Shave eyebrows"
+  end
+end
+
+namespace :afternoon do
+  desc "Make special afternoon coffee"
+  task :make_coffee do
+    # Run an existing task from a different namespace
+    Rake::Task['morning:make_coffee'].invoke
+    puts "Add bourbon"   # You have a drinking problem
+  end
+end
