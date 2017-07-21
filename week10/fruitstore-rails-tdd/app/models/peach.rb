@@ -1,0 +1,2 @@
+class Peach < ApplicationRecord
+end
