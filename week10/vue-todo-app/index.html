@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue 2Do</title>
+  <script src="js/vue.js"></script>
+  <style>
+  .taskDone{
+    text-decoration: line-through;
+    opacity: 0.5;
+  }
+  </style>
+</head>
+<body>
+
+  <div id="app">
+    <span v-if="visible">{{ message }}</span>
+
+    <ol>
+      <todo-item
+        v-for="item in todo_list"
+        v-bind:class="{ taskDone: item.done }"
+        v-bind:todo="item">
+      </todo-item>
+      <!--
+      <li
+        v-bind:class="{ taskDone: t.done }"
+        v-for="t in todo_list">
+        <input type="checkbox" v-model="t.done">
+        {{ t.text }}
+      </li>
+      -->
+    </ol>
+
+   <!-- <input v-model="message"> -->
+
+   <input v-model="newItemText" v-on:keyup.enter="addItem" type="text" placeholder="Enter new task">
+
+
+
+   <br>
+<!--
+   <button v-on:click="reverseMessage">Reverse Heading</button> -->
+
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
