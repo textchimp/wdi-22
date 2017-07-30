@@ -16,7 +16,7 @@ app.cameraPosIndex = 0;
 
 app.lastMouseTime = 0;
 
-app.numParticles = 200; //1000000;
+app.numParticles = 2000; //1000000;
 app.particleDistribution = 300;
 
 app.randyRange = function (min, max) {
@@ -25,48 +25,52 @@ app.randyRange = function (min, max) {
 };
 
 app.controller = {
-  particleImages: [
-    // new THREE.TextureLoader().load( "img/snowflake.png" ),
-    // new THREE.TextureLoader().load( "img/el.png" ),
-
-    new THREE.TextureLoader().load( "img/alice-head.png"),
-    new THREE.TextureLoader().load( "img/andy-head.png"),
-    new THREE.TextureLoader().load( "img/anusha-head.png"),
-    new THREE.TextureLoader().load( "img/edgy-head.png"),
-    new THREE.TextureLoader().load( "img/james-head.png"),
-    new THREE.TextureLoader().load( "img/john-head.png"),
-    new THREE.TextureLoader().load( "img/jonathan-head.png"),
-    new THREE.TextureLoader().load( "img/julian-head.png"),
-    new THREE.TextureLoader().load( "img/lingxiao-head.png"),
-    new THREE.TextureLoader().load( "img/luke-head.png"),
-    new THREE.TextureLoader().load( "img/max-head.png"),
-    new THREE.TextureLoader().load( "img/michelle-head.png"),
-    new THREE.TextureLoader().load( "img/quinn-head.png"),
-    new THREE.TextureLoader().load( "img/ryan-head.png"),
-    new THREE.TextureLoader().load( "img/weijia-head.png")
-    // new THREE.TextureLoader().load( "img/sausage-alice.png"),
-    // new THREE.TextureLoader().load( "img/sausage-andy.png"),
-    // new THREE.TextureLoader().load( "img/sausage-anusha.png"),
-    // new THREE.TextureLoader().load( "img/sausage-james.png"),
-    // new THREE.TextureLoader().load( "img/sausage-john.png"),
-    // new THREE.TextureLoader().load( "img/sausage-jonathan.png"),
-    // new THREE.TextureLoader().load( "img/sausage-julian.png"),
-    // new THREE.TextureLoader().load( "img/sausage-lingxiao.png"),
-    // new THREE.TextureLoader().load( "img/sausage-max.png"),
-    // new THREE.TextureLoader().load( "img/sausage-michelle.png"),
-    // new THREE.TextureLoader().load( "img/sausage-quinn.png"),
-    // new THREE.TextureLoader().load( "img/sausage-ryan.png"),
-    // new THREE.TextureLoader().load( "img/sausage-weijia.png"),
-    // new THREE.TextureLoader().load( "img/sausage-weijia.png"),
-    // new THREE.TextureLoader().load( "img/sausage-alice.png")
-  ],
+  particleImages: {
+    heads: [
+      new THREE.TextureLoader().load( "img/alice-head.png"),
+      new THREE.TextureLoader().load( "img/andy-head.png"),
+      new THREE.TextureLoader().load( "img/anusha-head.png"),
+      new THREE.TextureLoader().load( "img/edgy-head.png"),
+      new THREE.TextureLoader().load( "img/james-head.png"),
+      new THREE.TextureLoader().load( "img/john-head.png"),
+      new THREE.TextureLoader().load( "img/jonathan-head.png"),
+      new THREE.TextureLoader().load( "img/julian-head.png"),
+      new THREE.TextureLoader().load( "img/lingxiao-head.png"),
+      new THREE.TextureLoader().load( "img/luke-head.png"),
+      new THREE.TextureLoader().load( "img/max-head.png"),
+      new THREE.TextureLoader().load( "img/michelle-head.png"),
+      new THREE.TextureLoader().load( "img/quinn-head.png"),
+      new THREE.TextureLoader().load( "img/ryan-head.png"),
+      new THREE.TextureLoader().load( "img/weijia-head.png")
+    ],
+    hotdogs: [
+      // new THREE.TextureLoader().load( "img/snowflake.png" ),
+      // new THREE.TextureLoader().load( "img/el.png" ),
+      new THREE.TextureLoader().load( "img/sausage-alice.png"),
+      new THREE.TextureLoader().load( "img/sausage-andy.png"),
+      new THREE.TextureLoader().load( "img/sausage-anusha.png"),
+      new THREE.TextureLoader().load( "img/sausage-james.png"),
+      new THREE.TextureLoader().load( "img/sausage-john.png"),
+      new THREE.TextureLoader().load( "img/sausage-jonathan.png"),
+      new THREE.TextureLoader().load( "img/sausage-julian.png"),
+      new THREE.TextureLoader().load( "img/sausage-lingxiao.png"),
+      new THREE.TextureLoader().load( "img/sausage-max.png"),
+      new THREE.TextureLoader().load( "img/sausage-michelle.png"),
+      new THREE.TextureLoader().load( "img/sausage-quinn.png"),
+      new THREE.TextureLoader().load( "img/sausage-ryan.png"),
+      new THREE.TextureLoader().load( "img/sausage-weijia.png"),
+      new THREE.TextureLoader().load( "img/sausage-weijia.png"),
+      new THREE.TextureLoader().load( "img/sausage-alice.png")
+    ]
+  },
   particleMap: 0,
+  PROJECTWEEK: false,
   particleBlend: THREE.AdditiveBlending,
   rotationSpeed: 0.02,
   bouncingSpeed: 0,  // 0.02
   particleAlpha: 0.5,
   particleSize: 14,
-  velocityScale: 0.001, //1.0,
+  velocityScale: 1.0,
   particleBright: 1.0,
   particleColour: [255, 255, 255],
   particleCount: app.numParticles,
@@ -76,24 +80,33 @@ app.controller = {
   ySineRange: 1,
   zSineRange: 1,
 
-  particleReset: function(){
-    // delete app.particleSystem;
-    // app.particleSystem.geometry.verticesNeedUpdate = true;
+  particleReset: function(projectWeek){
 
     // app.particleSystem = app.createParticleSystem();
     // app.scene.add( app.particleSystem );
 
+    for (var i = 0; i < app.psystems.length; i++) {
+      app.scene.remove( app.psystems[i] );
+    }
+    app.psystems  = [];
 
-  for (var i = 0; i < app.psystems.length; i++) {
-    app.scene.remove( app.psystems[i] );
-  }
-  app.psystems  = [];
+    if(projectWeek){
 
-  for (var i = 0; i < app.controller.particleImages.length; i++) {
-    var ps = app.createParticleSystem( app.controller.particleImages[i] );
-    app.psystems.push( ps );
-    app.scene.add( ps );
-  }
+      for (var i = 0; i < app.controller.particleImages.hotdogs.length; i++) {
+        var ps = app.createParticleSystem( app.controller.particleImages.hotdogs[i] );
+        app.psystems.push( ps );
+        app.scene.add( ps );
+      }
+
+    } else {
+
+      for (var i = 0; i < app.controller.particleImages.heads.length; i++) {
+        var ps = app.createParticleSystem( app.controller.particleImages.heads[i] );
+        app.psystems.push( ps );
+        app.scene.add( ps );
+      }
+
+    }
 
   },
   particlePos: {
@@ -209,13 +222,15 @@ app.init = function () {
   // app.line = app.createLineFromSpline( app.spline );
   // app.scene.add( app.line );
 
-
   app.psystems  = [];
-  for (var i = 0; i < app.controller.particleImages.length; i++) {
-    var ps = app.createParticleSystem( app.controller.particleImages[i] );
-    app.psystems.push( ps );
-    app.scene.add( ps );
-  }
+  app.controller.particleReset();
+
+  // for (var i = 0; i < app.controller.particleImages.heads.length; i++) {
+  //   var ps = app.createParticleSystem( app.controller.particleImages.heads[i] );
+  //   app.psystems.push( ps );
+  //   app.scene.add( ps );
+  // }
+
   //
   // app.particleSystem = app.createParticleSystem( app.controller.particleImages[0] );
   // app.scene.add( app.particleSystem );
@@ -234,6 +249,15 @@ app.init = function () {
 
 
   app.gui = new dat.GUI();
+
+  app.gui.add(app.controller, 'PROJECTWEEK').onFinishChange(function(val){
+    if(val) {
+      app.controller.particleReset(true);
+    } else {
+      app.controller.particleReset();
+    }
+  });
+
   app.gui.add(app.controller, 'rotationSpeed', -0.5, 2);
   app.gui.add(app.controller, 'bouncingSpeed', 0, 0.2);
   app.gui.add(app.controller, 'particleSize', 1, 100).listen();
@@ -243,17 +267,14 @@ app.init = function () {
   app.gui.add(app.controller, 'velocityScale', -2, 2).listen();
   app.gui.add(app.controller, 'particleReset');
   app.gui.add(app.controller, 'tour');
-  app.gui.add(app.controller, 'xSineRange', -2, 2);
-  app.gui.add(app.controller, 'ySineRange', -2, 2);
-  app.gui.add(app.controller, 'zSineRange', -2, 2);
 
   // app.gui.add(app.controller, 'particleMap', 0, app.controller.particleImages.length-1)
+  //  app.gui.add(app.controller, 'particleAlpha', 0.0, 1.0)
+  // .onFinishChange(function(value) {
+  //   app.particleSystem.material.alphaTest = value;
+  // });
 
-   app.gui.add(app.controller, 'particleAlpha', 0.0, 1.0)
-  .onFinishChange(function(value) {
-    app.particleSystem.material.alphaTest = value;
-  });
-
+/**************
    app.gui.add(app.controller, 'particleMap', {head: 0, star: 1, ele: 2 })
   .onFinishChange(function(value) {
     console.log(value, app.controller.particleImages[ value ]);
@@ -275,6 +296,12 @@ app.init = function () {
       app.psystems[i].material.needsUpdate  = true;
     }
   });
+  *******************/
+
+  app.gui.sineWaves = app.gui.addFolder('Sine Wave Ranges');
+  app.gui.sineWaves.add(app.controller, 'xSineRange', -2, 2);
+  app.gui.sineWaves.add(app.controller, 'ySineRange', -2, 2);
+  app.gui.sineWaves.add(app.controller, 'zSineRange', -2, 2);
 
   app.gui.particlePlacementFolder = app.gui.addFolder('Particle Placement');
   app.gui.particlePlacementFolder.add(app.controller.particlePos, 'xMin', -1000, 0);
@@ -434,14 +461,13 @@ app.animateParticles = function ( ps ) {
   //ps.material.alphaTest = app.controller.particleAlpha;
 
 
+/********************************* MUTUAL GRAVITATION first attempt: Maximum particles 200, or too slow!
 
     for (var i = 0; i < vertices.length; i++) {
       var vertA = vertices[i];
 
         for (var j = 0; j < vertices.length; j++) {
               var vertB = vertices[j];
-
-
 
               // if( vert.y < -app.particleDistribution/2 ){
               //     vert.y = app.particleDistribution;
@@ -453,7 +479,6 @@ app.animateParticles = function ( ps ) {
                   dz = vertA.z - vertB.z;
 
               var dist = Math.sqrt(dx*dx, dy*dy, dz*dz);
-
 
               // if dist > 100) {
                   // how to reverse? along line from particle to center
@@ -470,49 +495,48 @@ app.animateParticles = function ( ps ) {
               vertA.y += vertA.vy * app.controller.velocityScale;
               vertA.z += vertA.vz * app.controller.velocityScale;
 
-
-
               // vertA.x += app.controller.xSineRange * Math.cos(vertA.xStep);
               // vertA.y += app.controller.ySineRange * Math.cos(vertA.yStep);
               // vertA.z += app.controller.zSineRange * Math.cos(vertA.zStep);
       }
    }
    ps.geometry.verticesNeedUpdate = true;
-  };
+ };
+***************************************************/
 
-//   for (var i = 0; i < vertices.length; i++) {
-//     var vert = vertices[i];
-//
-//     // if( vert.y < -app.particleDistribution/2 ){
-//     //     vert.y = app.particleDistribution;
-//     // }
-//     //
-//     // vert.y -= app.controller.rotationSpeed;
-//
-//     var dist = Math.sqrt( vert.x*vert.x + vert.y*vert.y + vert.z*vert.z );
-//
-//     // if dist > 100) {
-//         // how to reverse? along line from particle to center
-//     // } else
-//
-//     if( dist > 10.0){
-//       var force = (10.0 / (dist*dist)) * -app.controller.rotationSpeed; //0.05;
-//       vert.vx += force * vert.x;
-//       vert.vy += force * vert.y;
-//       vert.vz += force * vert.z;
-//     }
-//
-//     vert.x += vert.vx * app.controller.velocityScale;
-//     vert.y += vert.vy * app.controller.velocityScale;
-//     vert.z += vert.vz * app.controller.velocityScale;
-//
-//     vert.x += app.controller.xSineRange * Math.cos(vert.xStep);
-//     vert.y += app.controller.ySineRange * Math.cos(vert.yStep);
-//     vert.z += app.controller.zSineRange * Math.cos(vert.zStep);
-//   }
-//
-//  ps.geometry.verticesNeedUpdate = true;
-// };
+  for (var i = 0; i < vertices.length; i++) {
+    var vert = vertices[i];
+
+    // if( vert.y < -app.particleDistribution/2 ){
+    //     vert.y = app.particleDistribution;
+    // }
+    //
+    // vert.y -= app.controller.rotationSpeed;
+
+    var dist = Math.sqrt( vert.x*vert.x + vert.y*vert.y + vert.z*vert.z );
+
+    // if dist > 100) {
+        // how to reverse? along line from particle to center
+    // } else
+
+    if( dist > 10.0){
+      var force = (10.0 / (dist*dist)) * -app.controller.rotationSpeed; //0.05;
+      vert.vx += force * vert.x;
+      vert.vy += force * vert.y;
+      vert.vz += force * vert.z;
+    }
+
+    vert.x += vert.vx * app.controller.velocityScale;
+    vert.y += vert.vy * app.controller.velocityScale;
+    vert.z += vert.vz * app.controller.velocityScale;
+
+    // vert.x += app.controller.xSineRange * Math.cos(vert.xStep);
+    // vert.y += app.controller.ySineRange * Math.cos(vert.yStep);
+    // vert.z += app.controller.zSineRange * Math.cos(vert.zStep);
+  }
+
+ ps.geometry.verticesNeedUpdate = true;
+};
 
 
 app.createSpline = function () {
