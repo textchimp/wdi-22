@@ -5,7 +5,14 @@ app.controller = {
   step: 0,
   rotationSpeed: 0.02,
   bouncingSpeed: 0.02,
-  cameraPosIndex: 0
+  cameraPosIndex: 0,
+
+  numParticles: 20000,
+  particleDistribution: 300,
+
+  velocityScale: 1.0,
+  gravityScale: 0.05
+
 };
 
 app.init = function(){
@@ -25,7 +32,7 @@ app.init = function(){
     60, // FOV
     app.width / app.height, // screen ratio
     0.1, // near field
-    1000 // far field
+    5000 // far field
   );
 
   // Position our camera somewhere in the scene; it has a perspective
@@ -42,47 +49,51 @@ app.init = function(){
   // set the size
   app.renderer.setSize( app.width, app.height );
   app.renderer.setClearColor( 0x000000 ); // background colour
-  app.renderer.shadowMap.enabled = true; // shadows are computationally expensive, so disabled by default
-  app.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  // app.renderer.shadowMap.enabled = true; // shadows are computationally expensive, so disabled by default
+  // app.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 
-  app.axes = new THREE.AxisHelper( 40 );
-  app.scene.add( app.axes );
-
-  app.plane = app.createPlane();
-  app.scene.add( app.plane );
+  // app.axes = new THREE.AxisHelper( 40 );
+  // app.scene.add( app.axes );
+  //
+  // app.plane = app.createPlane();
+  // app.scene.add( app.plane );
 
   app.spotlight = app.createSpotlight();
   app.scene.add( app.spotlight );
 
 
-  // app.cube = app.createCube( -4, 10, 0, 4 );
-  // app.scene.add( app.cube );
+  app.cube = app.createCube( 15, 15, 15, 6);
+  app.scene.add( app.cube );
 
-  app.cubes = [];
-  for (var i = 0; i < 1000; i++) {
-
-    var cube = app.createCube(
-      THREE.Math.randInt(-500, 500 ),  // x
-      THREE.Math.randInt(-500, 500 ), // y
-      THREE.Math.randInt(-500, 500 ), // z
-      THREE.Math.randInt(4, 50 ) //4 // size
-    );
-
-    cube.material.color.setHSL( Math.random(), 1.0, 0.5);
-
-    app.cubes.push( cube );
-    app.scene.add( cube );
-
-  }
+  //
+  // app.cubes = [];
+  // for (var i = 0; i < 1000; i++) {
+  //
+  //   var cube = app.createCube(
+  //     THREE.Math.randInt(-500, 500 ),  // x
+  //     THREE.Math.randInt(-500, 500 ), // y
+  //     THREE.Math.randInt(-500, 500 ), // z
+  //     THREE.Math.randInt(4, 50 ) //4 // size
+  //   );
+  //
+  //   cube.material.color.setHSL( Math.random(), 1.0, 0.5);
+  //
+  //   app.cubes.push( cube );
+  //   app.scene.add( cube );
+  //
+  // }
 
   app.sphere = app.createSphere();
   app.scene.add( app.sphere );
 
-  app.ambient = new THREE.AmbientLight( 0x553333 );
+  app.ambient = new THREE.AmbientLight( 0x555555 );
   app.scene.add( app.ambient );
 
   app.spline = app.createSpline();
+
+  app.particleSystem = app.createParticleSystem();
+  app.scene.add( app.particleSystem );
 
   // app.line = app.createLineFromSpline( app.spline );
   // app.scene.add( app.line );
@@ -98,9 +109,14 @@ app.init = function(){
   app.gui = new dat.GUI();
   app.gui.add( app.controller, 'rotationSpeed', 0, 0.2 );
   app.gui.add( app.controller, 'bouncingSpeed', 0, 2.0 );
+  app.gui.add( app.controller, 'velocityScale', -2, 2 );
+  app.gui.add( app.controller, 'gravityScale', -0.1, 0.1 );
+
 
   // Attach the canvas element created by the renderer onto the page
   document.getElementById("output").appendChild( app.renderer.domElement );
+
+  app.stats = app.addStats();
 
   // Actually draw something
   app.animate();
@@ -145,6 +161,93 @@ app.createSpline = function(){
 
 };
 
+app.createParticleSystem = function(){
+
+  // Particles are just a collection of vertices in a general-purpose geometry
+  var particles = new THREE.Geometry();
+
+  for (var i = 0; i < app.controller.numParticles; i++) {
+
+    // split the particles into two sheets!
+    if(Math.random() < 0.5){
+      var x = 200;
+      var y = THREE.Math.randInt(-app.controller.particleDistribution, app.controller.particleDistribution );
+      var z = THREE.Math.randInt(-app.controller.particleDistribution, app.controller.particleDistribution );
+    } else {
+      var x = THREE.Math.randInt(-app.controller.particleDistribution, app.controller.particleDistribution );
+      var y = THREE.Math.randInt(-app.controller.particleDistribution, app.controller.particleDistribution );
+      var z = 400; 
+    }
+
+
+
+    // Create a vertex
+    var particle = new THREE.Vector3(x, y, z);
+
+    var velRange = 0.9;
+    particle.vx = 0; // THREE.Math.randFloat( -velRange, velRange );
+    particle.vy = 0; // THREE.Math.randFloat( -velRange, velRange );
+    particle.vz = 0; // THREE.Math.randFloat( -velRange, velRange );
+
+
+    // Add it to our particle system geometry
+    particles.vertices.push( particle );
+  } // for
+
+  var particleMaterial = new THREE.PointsMaterial({
+    color: 0xFFFFFF,
+    size: 20,
+    map: THREE.ImageUtils.loadTexture("/img/snowflake.png"),
+    blending: THREE.AdditiveBlending,
+    transparent: true,
+    alphaTest: 0.5 // try values like 0 to 0.1 to see effect
+  });
+
+  var particleSystem = new THREE.Points( particles, particleMaterial );
+
+  return particleSystem;
+};
+
+
+app.animateParticles = function(){
+
+  var vertices = app.particleSystem.geometry.vertices;
+
+  for (var i = 0; i < vertices.length; i++) {
+    var vert = vertices[i];
+
+    // rain effect
+    // if( vert.y < -200 ){
+    //   vert.y = app.controller.particleDistribution + THREE.Math.randInt(-50, 50);
+    // }
+    // vert.y -= app.controller.bouncingSpeed;
+
+    var dist = Math.sqrt( vert.x*vert.x + vert.y*vert.y + vert.z*vert.z )
+
+
+    if( dist > 10.0 ){
+      // only apply gravity if the particle isn't too close to the origin,
+      // to prevent too strong an effect
+      var force = ( 10.0 / (dist*dist) ) * -app.controller.gravityScale;
+      vert.vx += force * vert.x;
+      vert.vy += force * vert.y;
+      vert.vz += force * vert.z;
+
+    }
+
+    vert.x += vert.vx * app.controller.velocityScale;
+    vert.y += vert.vy * app.controller.velocityScale;
+    vert.z += vert.vz * app.controller.velocityScale;
+
+
+  } // for
+
+    // app.particleSystem.rotation.y -= app.controller.rotationSpeed;
+
+    app.particleSystem.geometry.verticesNeedUpdate = true;
+};
+
+
 app.animate = function(){
   //
   // app.controller.cameraPosIndex++;
@@ -162,15 +265,20 @@ app.animate = function(){
   // var newCameraLookAt = app.spline.getPoint( (app.controller.cameraPosIndex + 1) / 3000 ); // look 1 step ahead of current position
   // app.camera.lookAt( newCameraLookAt );
 
+  app.animateParticles();
 
-  // app.cube.rotation.x += app.controller.rotationSpeed;
-  // app.cube.rotation.y += app.controller.rotationSpeed;
-  // app.cube.rotation.z += app.controller.rotationSpeed;
+  app.cube.rotation.x += app.controller.rotationSpeed;
+  app.cube.rotation.y += app.controller.rotationSpeed;
+  app.cube.rotation.z += app.controller.rotationSpeed;
+
+  app.stats.update();
 
   app.controller.step += app.controller.bouncingSpeed;
 
-  app.sphere.position.x = -20 + ( 10 * Math.cos(app.controller.step) );
-  app.sphere.position.y =   4 + ( 10 * Math.abs(Math.sin(app.controller.step)) );
+  app.sphere.rotation.y += app.controller.rotationSpeed;
+
+  // app.sphere.position.x = -20 + ( 10 * Math.cos(app.controller.step) );
+  // app.sphere.position.y =   4 + ( 10 * Math.abs(Math.sin(app.controller.step)) );
 
   app.renderer.render( app.scene, app.camera );
   requestAnimationFrame( app.animate );
@@ -182,9 +290,9 @@ app.createSpotlight = function(){
 
   var spotlight = new THREE.SpotLight( 0xFFFFFF );
   spotlight.position.set( 30, 60, 10 );
-  spotlight.castShadow = true;
-  spotlight.shadow.mapSize.width = 2048;
-  spotlight.shadow.mapSize.height = 2048;
+  // spotlight.castShadow = true;
+  // spotlight.shadow.mapSize.width = 2048;
+  // spotlight.shadow.mapSize.height = 2048;
 
   return spotlight;
 };
@@ -192,16 +300,18 @@ app.createSpotlight = function(){
 
 app.createSphere = function(){
 
-  var sphereGeometry = new THREE.SphereGeometry( -4, 30, 30 );  // radius, X and Y segments to approximate sphere with
+  var sphereGeometry = new THREE.SphereGeometry( 20, 40, 40 );  // radius, X and Y segments to approximate sphere with
   var sphereMaterial = new THREE.MeshLambertMaterial({
-    color: 0x039BE5,
-    wireframe: false
+    color: 0xFFFFFF,
+    wireframe: false,
+    side: THREE.DoubleSide,
+    map: THREE.ImageUtils.loadTexture("/img/earth.jpg")
   });
 
   var sphere = new THREE.Mesh( sphereGeometry, sphereMaterial );
 
-  sphere.position.set( -20, 4, 10 );
-  sphere.castShadow = true;
+  sphere.position.set( 0, 0, 0 );
+  // sphere.castShadow = true;
 
   return sphere;
 };
@@ -217,7 +327,7 @@ app.createCube = function(x, y, z, size){
   var cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 
   cube.position.set( x, y, z );
-  // cube.castShadow = true;
+  // // cube.castShadow = true;
 
   return cube;
 };
@@ -240,6 +350,33 @@ app.createPlane = function(){
 
   return plane;
 };
+
+app.addStats = function(){
+
+  var stats = new Stats();
+  stats.setMode(0);
+  stats.domElement.style.position = 'absolute';
+  stats.domElement.style.left = '0px';
+  stats.domElement.style.top = '0px';
+
+  document.getElementById("stats").appendChild( stats.domElement );
+
+  return stats;
+}
+
+
+
+app.onResize = function(){
+  app.width = window.innerWidth;
+  app.height = window.innerHeight;
+
+  app.camera.aspect = app.width / app.height;
+  app.camera.updateProjectionMatrix();
+
+  app.renderer.setSize( app.width, app.height );
+}
+
+window.addEventListener( "resize", app.onResize, false);
 
 
 window.onload = app.init;  // no jQuery today, but this is basically $(document).ready(function(){ ... })
