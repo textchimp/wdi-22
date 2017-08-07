@@ -15,6 +15,7 @@ RSpec.describe "fruits/index.html.erb", type: :view do
     end
 
     it 'should include the name of one of the fruits in the DB' do
+      get :index
       expect( rendered ).to match /Fruit number 0/
     end
 

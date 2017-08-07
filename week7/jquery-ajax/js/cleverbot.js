@@ -9,7 +9,7 @@ $(document).ready(function(){
     $.ajax({
       url: baseURL,
       data: {
-        key: '', // API KEY GOES HERE
+        key: "CC30rGhYX1n4Rt77WrEoK1V5Wxw",
         input: banter
       }
     })

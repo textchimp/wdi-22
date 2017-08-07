@@ -20,14 +20,13 @@ $(document).ready(function(){
     // Create a new <img> element, set the src URL attribute, and append the element to the page
 
     var thumbURL = generateThumbnailURL( photo, 'q' );     // ..... _q.jpg  (150 x 150)
-    var fullSizeURL = generateThumbnailURL( photo, 'h' );  // ..... _h.jpg  (1600 x 1600)
+    var fullSizeURL = generateThumbnailURL( photo, 'k' );  // ..... _h.jpg  (1600 x 1600)
 
+    // Wrap each thumbnail in a link tag, which links to the full size image
     var $a = $('<a>').attr('href', fullSizeURL);
-
     var $img = $('<img>').attr('src',thumbURL);
 
-    $a.append($img);   // <a href="URL"><img src="IMAGE_URL"></a>
-
+    $a.append($img);   // <a href="FULL_SIZE_IMAGE_URL"><img src="THUMBNAIL_IMAGE_URL"></a>
     $('body').append($a);
 
   };
@@ -79,6 +78,9 @@ $(document).ready(function(){
     var baseURL = "https://api.flickr.com/services/rest";
     var API_KEY = "3ab66c44737420e50ceaee170f6eb074";
 
+    // Construct a URL like:
+    // https://api.flickr.com/services/rest?method=flickr.photos.search&api_key=3ab66c44737420e50ceaee170f6eb074&text=Satantango&format=json&nojsoncallback=true
+
     $.ajax({
       url: baseURL,
       data: {
@@ -102,7 +104,7 @@ $(document).ready(function(){
 
     ev.preventDefault();
 
-    $('img').remove();
+    $('img').remove();  // get rid of the existing
 
     var searchQuery = $('#searchFlickr').val();
     console.log('submit: ', searchQuery);

@@ -12,7 +12,6 @@
         1,
         8,
         2,
-        0,
         null,
         null,
         1,
@@ -20,6 +19,7 @@
         null,
         null,
         1,
+        0,
         0,
         null,
         null,
@@ -318,10 +318,92 @@
         1,
         null
       ],
+      "/Users/textchimp/wdi/classwork/week10/fruitstore-rails-tdd/app/helpers/peaches_helper.rb": [
+        1,
+        null
+      ],
       "/Users/textchimp/wdi/classwork/week10/fruitstore-rails-tdd/config/routes.rb": [
         1,
         null,
+        1,
         null,
+        1,
+        null,
+        null
+      ],
+      "/Users/textchimp/wdi/classwork/week10/fruitstore-rails-tdd/spec/views/peaches/edit.html.erb_spec.rb": [
+        1,
+        null,
+        1,
+        1,
+        1,
+        null,
+        null,
+        null,
+        null,
+        1,
+        1,
+        null,
+        1,
+        null,
+        1,
+        null,
+        null,
+        null
+      ],
+      "/Users/textchimp/wdi/classwork/week10/fruitstore-rails-tdd/spec/views/peaches/index.html.erb_spec.rb": [
+        1,
+        null,
+        1,
+        1,
+        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/Users/textchimp/wdi/classwork/week10/fruitstore-rails-tdd/spec/views/peaches/new.html.erb_spec.rb": [
+        1,
+        null,
+        1,
+        1,
+        1,
+        null,
+        null,
+        null,
+        null,
+        1,
+        1,
+        null,
+        1,
+        null,
+        1,
+        null,
+        null,
+        null
+      ],
+      "/Users/textchimp/wdi/classwork/week10/fruitstore-rails-tdd/spec/views/peaches/show.html.erb_spec.rb": [
+        1,
+        null,
+        1,
+        1,
+        1,
+        null,
+        null,
+        null,
+        null,
+        1,
+        1,
         1,
         null,
         null
@@ -342,8 +424,12 @@
         1,
         1,
         null
+      ],
+      "/Users/textchimp/wdi/classwork/week10/fruitstore-rails-tdd/app/models/peach.rb": [
+        1,
+        null
       ]
     },
-    "timestamp": 1500518573
+    "timestamp": 1500805578
   }
 }

@@ -45,4 +45,13 @@ $(document).ready( function(){
   xhr.open("GET", "https://api.themoviedb.org/3/search/movie?api_key=REAL-API-KEY-GOES-HERE&query=alien&page=2");
   xhr.send();
 
+
+  $(document).on("click", ".result", function(){
+    // click handling code
+  });
+
+  $('.result').on("click", function(  ){
+    // handle click
+  });
+
 });

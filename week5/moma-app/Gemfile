@@ -45,6 +45,7 @@ group :development do
 
   gem 'pry-rails'
   gem 'annotate'
+  gem 'rb-readline'
   gem 'pry-nav'
 
 end

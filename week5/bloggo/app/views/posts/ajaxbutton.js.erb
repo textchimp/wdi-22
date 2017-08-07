@@ -1,0 +1,5 @@
+console.log('in ajaxbutton.js.erb: ', '<%= @posts.first.title %>');
+
+var data = JSON.parse('<%= raw @posts.to_json %>')
+
+console.log('data', data);

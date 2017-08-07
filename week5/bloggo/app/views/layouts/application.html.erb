@@ -6,9 +6,12 @@
 
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
+
+  <%= cloudinary_js_config %>
+
   </head>
 
-  <body>
+  <body class="<%= controller_name %> <%= action_name %>">
     <%= image_tag ['bloggo.png', 'bloggo2.gif', 'bloggo3.gif'].sample, id: 'mainLogo' %>
 
     <nav>

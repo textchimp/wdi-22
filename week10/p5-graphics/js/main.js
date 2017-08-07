@@ -1,5 +1,6 @@
 
 var circles = [];
+var velocityScale = 1;
 
 // Need to run 'python -m SimpleHTTPServer' in this folder and open the page via localhost:8000/
 // in order for Javascript to have permission to load local files
@@ -27,7 +28,7 @@ var setup = function(){
   // ellipse( windowWidth/2, windowHeight/2, 80, 80 );
 
   // textSize(24);  // If you want to use text()
-
+  // blendMode(LIGHTEST);
 };
 
 var draw = function(){
@@ -55,7 +56,8 @@ var draw = function(){
       velocityY: random(-10, 10),
       x: mouseX,
       y: mouseY,
-      hue: hue
+      hue: hue,
+      bright: 255
     };
     circles.push( circle );
 
@@ -66,7 +68,10 @@ var draw = function(){
 
   } // keypress/mouse
 
-  var velocityScale =  map(mouseY, 0, windowHeight, -2, 2);
+  if( keyIsDown(CONTROL) ){
+    velocityScale = map(mouseY, 0, windowHeight, -2, 2);
+  }
+
   var sineRangeScale = map(mouseX, 0, windowWidth, 0, 50);
 
   for (var i = 0; i < circles.length; i++) {
@@ -77,20 +82,30 @@ var draw = function(){
     c.y += c.velocityY * velocityScale;
 
     // Wrap around X edges
-    if( c.x > windowWidth){
-      c.x = 0;
-    } else if( c.x < 0 ){
-      c.x = windowWidth;
+    if( c.x >= windowWidth || c.x <= 0 ){
+      c.velocityX *= -1;
+    }
+    if( c.y >= windowHeight || c.y <= 0 ){
+      c.velocityY *= -1;
     }
 
-    // Wrap around Y edges
-    if( c.y > windowHeight){
-      c.y = 0;
-    } else if( c.y < 0 ){
-      c.y = windowHeight;
-    }
+    //
+    // if( c.x >= windowWidth || c.x <= 0 ){
+    //   c.x = 0;
+    // } else if( c.x < 0 ){
+    //   c.x = windowWidth;
+    // }
 
-    fill( c.hue, 255, 255 );
+    // // Wrap around Y edges
+    // if( c.y > windowHeight){
+    //   c.y = 0;
+    // } else if( c.y < 0 ){
+    //   c.y = windowHeight;
+    // }
+
+    // c.bright--;
+
+    fill( c.hue, 255, c.bright );
     ellipse(
       c.x,
       c.y,

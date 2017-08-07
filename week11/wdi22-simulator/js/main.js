@@ -599,18 +599,18 @@ app.createParticleSystem = function( map ){
     particles.vertices.push( particle );
   }
 
-  console.log('p', app.controller.particleImages[ THREE.Math.randInt(0, app.controller.particleImages.length-1) ]);
+  // console.log('p', app.controller.particleImages[ THREE.Math.randInt(0, app.controller.particleImages.length-1) ]);
 
   var particleMaterial = new THREE.PointsMaterial({
-    color: 0xFFFFFF, //0xFF0000, //
+    color: 0xFF0000, //0xFF0000, //
     size: 10,
     // map: new THREE.TextureLoader().load( "img/luke-head.png" ),
     map: map, //app.controller.particleImages[ THREE.Math.randInt(0, app.controller.particleImages.length-1) ],
     //new THREE.TextureLoader().load( "img/luke-head.png" ),
     //THREE.ImageUtils.loadTexture("img/head.png"),
     blending:  THREE.NormalBlending, //app.controller.particleBlend, // THREE.NormalBlending,
-    transparent: true,
-    alphaTest: 0.5, // app.controller.particleAlpha
+    // transparent: true,
+    alphaTest: 0.9, // app.controller.particleAlpha
   });
 
   var particleSystem = new THREE.Points( particles, particleMaterial );
